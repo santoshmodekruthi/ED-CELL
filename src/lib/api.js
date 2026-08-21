@@ -1,4 +1,5 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL =
+  import.meta.env.VITE_API_URL || "https://ed-cell.onrender.com/api";
 
 function authHeaders() {
   const token = localStorage.getItem("edcell_admin_token");
@@ -19,6 +20,7 @@ async function request(path, options = {}) {
     const body = await res.json().catch(() => ({}));
     throw new Error(body.message || `Request failed (${res.status})`);
   }
+
   if (res.status === 204) return null;
   return res.json();
 }
@@ -33,32 +35,67 @@ export const api = {
 
   // Auth
   login: (username, password) =>
-    request("/auth/login", { method: "POST", body: JSON.stringify({ username, password }) }),
+    request("/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ username, password }),
+    }),
 
   // Admin: events
   getAllEvents: () => request("/events/all"),
-  createEvent: (data) => request("/events", { method: "POST", body: JSON.stringify(data) }),
-  updateEvent: (id, data) => request(`/events/${id}`, { method: "PUT", body: JSON.stringify(data) }),
+  createEvent: (data) =>
+    request("/events", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+  updateEvent: (id, data) =>
+    request(`/events/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
   deleteEvent: (id) => request(`/events/${id}`, { method: "DELETE" }),
 
   // Admin: mentors
-  createMentor: (data) => request("/mentors", { method: "POST", body: JSON.stringify(data) }),
-  updateMentor: (id, data) => request(`/mentors/${id}`, { method: "PUT", body: JSON.stringify(data) }),
+  createMentor: (data) =>
+    request("/mentors", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+  updateMentor: (id, data) =>
+    request(`/mentors/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
   deleteMentor: (id) => request(`/mentors/${id}`, { method: "DELETE" }),
 
   // Admin: gallery
-  createGalleryItem: (data) => request("/gallery", { method: "POST", body: JSON.stringify(data) }),
+  createGalleryItem: (data) =>
+    request("/gallery", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
   deleteGalleryItem: (id) => request(`/gallery/${id}`, { method: "DELETE" }),
 
   // Admin: announcements
   getAllAnnouncements: () => request("/announcements/all"),
-  createAnnouncement: (data) => request("/announcements", { method: "POST", body: JSON.stringify(data) }),
+  createAnnouncement: (data) =>
+    request("/announcements", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
   updateAnnouncement: (id, data) =>
-    request(`/announcements/${id}`, { method: "PUT", body: JSON.stringify(data) }),
-  deleteAnnouncement: (id) => request(`/announcements/${id}`, { method: "DELETE" }),
+    request(`/announcements/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
+  deleteAnnouncement: (id) =>
+    request(`/announcements/${id}`, { method: "DELETE" }),
 
   // Admin: site content
-  updateContent: (data) => request("/content", { method: "PUT", body: JSON.stringify(data) }),
+  updateContent: (data) =>
+    request("/content", {
+      method: "PUT",
+      body: JSON.stringify(data),
+    }),
 };
 
 export default api;
